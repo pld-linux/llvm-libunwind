@@ -1,12 +1,12 @@
 Summary:	LLVM libunwind implementation
 Summary(pl.UTF-8):	Implementacja biblioteki libunwind z projektu LLVM
 Name:		llvm-libunwind
-Version:	3.9.1
+Version:	6.0.0
 Release:	1
 License:	BSD-like or MIT
 Group:		Libraries
 Source0:	http://releases.llvm.org/%{version}/libunwind-%{version}.src.tar.xz
-# Source0-md5:	f273dd0ed638ad0601b23176a36f187b
+# Source0-md5:	022a4ee2c3bf7b6d151e0444f66aca64
 URL:		http://llvm.org/
 BuildRequires:	cmake >= 3.4.3
 BuildRequires:	libstdc++-devel
@@ -31,6 +31,18 @@ Header file for LLVM libunwind implementation.
 
 %description devel -l pl.UTF-8
 Plik nagłówkowy implementacji LLVM libunwind.
+
+%package static
+Summary:	Static LLVM libunwind library
+Summary(pl.UTF-8):	Statyczna biblioteka LLVM libunwind
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description static
+Static LLVM libunwind library.
+
+%description static -l pl.UTF-8
+Statyczna biblioteka LLVM libunwind.
 
 %prep
 %setup -q -n libunwind-%{version}.src
@@ -66,3 +78,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libunwind.so
 %{_includedir}/llvm-libunwind
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/libunwind.a
