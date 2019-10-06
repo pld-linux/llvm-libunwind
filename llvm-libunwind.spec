@@ -1,12 +1,12 @@
 Summary:	LLVM libunwind implementation
 Summary(pl.UTF-8):	Implementacja biblioteki libunwind z projektu LLVM
 Name:		llvm-libunwind
-Version:	7.0.1
+Version:	8.0.1
 Release:	1
 License:	BSD-like or MIT
 Group:		Libraries
-Source0:	http://releases.llvm.org/%{version}/libunwind-%{version}.src.tar.xz
-# Source0-md5:	fe8c801dd79e087a6fa8d039390a47d0
+Source0:	https://github.com/llvm/llvm-project/releases/download/llvmorg-%{version}/libunwind-%{version}.src.tar.xz
+# Source0-md5:	a52e49a0af65f2d6d84e49f0f1912034
 URL:		http://llvm.org/
 BuildRequires:	cmake >= 3.4.3
 BuildRequires:	libstdc++-devel
