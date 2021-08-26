@@ -1,15 +1,21 @@
 Summary:	LLVM libunwind implementation
 Summary(pl.UTF-8):	Implementacja biblioteki libunwind z projektu LLVM
 Name:		llvm-libunwind
-Version:	11.0.1
+Version:	12.0.1
 Release:	1
 License:	BSD-like or MIT
 Group:		Libraries
 #Source0Download: https://github.com/llvm/llvm-project/releases/
 Source0:	https://github.com/llvm/llvm-project/releases/download/llvmorg-%{version}/libunwind-%{version}.src.tar.xz
-# Source0-md5:	b030a6d5807d797e505e4fbd32a36c2a
+# Source0-md5:	4ec327cee517fdb1f6a20e83748e2c7b
+#Source1Download: https://github.com/llvm/llvm-project/releases/
+Source1:	https://github.com/llvm/llvm-project/releases/download/llvmorg-%{version}/libcxx-%{version}.src.tar.xz
+# Source1-md5:	19fb22504643c4df45cb42a8f9d2f76e
+#Source2Download: https://github.com/llvm/llvm-project/releases/
+Source2:	https://github.com/llvm/llvm-project/releases/download/llvmorg-%{version}/llvm-%{version}.src.tar.xz
+# Source2-md5:	72a257604efa1d32ef85a37cd9c66873
 URL:		http://llvm.org/
-BuildRequires:	cmake >= 3.4.3
+BuildRequires:	cmake >= 3.13.4
 BuildRequires:	libstdc++-devel
 BuildRequires:	llvm-devel >= %{version}
 BuildRequires:	rpmbuild(macros) >= 1.605
@@ -48,12 +54,16 @@ Static LLVM libunwind library.
 Statyczna biblioteka LLVM libunwind.
 
 %prep
-%setup -q -n libunwind-%{version}.src
+%setup -q -c -a1 -a2
+
+%{__mv} libcxx-%{version}.src libcxx
+%{__mv} libunwind-%{version}.src libunwind
+%{__mv} llvm-%{version}.src llvm
 
 %build
 install -d build
 cd build
-%cmake ..
+%cmake ../libunwind
 
 %{__make}
 
@@ -64,7 +74,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{_includedir}/llvm-libunwind
-cp -p include/*.h $RPM_BUILD_ROOT%{_includedir}/llvm-libunwind
+cp -p libunwind/include/*.h $RPM_BUILD_ROOT%{_includedir}/llvm-libunwind
 
 %clean
 rm -rf $RPM_BUILD_ROOT
